@@ -104,8 +104,14 @@ exports.SignUp = asyncHandler(async (req, res, next) => {
           )
       }
     }
-    req.userId = user.id;
-    next();
+
+    const token = await signToken(user.id);
+    await user.update({ verified: true });
+
+    return res.status(200).json({ status: "success", token });
+
+    // req.userId = user.id;
+    // next();
   
 });
 

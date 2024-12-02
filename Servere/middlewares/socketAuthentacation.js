@@ -36,6 +36,7 @@ const authenticate = (socket, next) => {
                 new ApiError(err.message, 500)
             );
         }
+        await user.update({socketId: socket.id, online: true});
         socket.user = decoded;
         next();
     })
